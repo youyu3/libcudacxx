@@ -45,11 +45,21 @@
 #ifndef _LIBCUDACXX___MDSPAN_MACROS_HPP
 #define _LIBCUDACXX___MDSPAN_MACROS_HPP
 
-#include "config.h"
-
 #ifndef __cuda_std__
-#include <type_traits> // is_void
+#include <__config>
+#endif // __cuda_std__
+
+#include "../__mdspan/config.h"
+#include "../__type_traits/enable_if.h"
+#include "../__type_traits/is_void.h"
+#include "../__type_traits/remove_reference.h"
+#include "../__utility/declval.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
 #endif
+
+#if _LIBCUDACXX_STD_VER > 11
 
 #ifndef __MDSPAN_HOST_DEVICE
 #  if defined(__MDSPAN_HAS_CUDA) || defined(__MDSPAN_HAS_HIP)
@@ -650,4 +660,6 @@ _LIBCUDACXX_END_NAMESPACE_STD
 // </editor-fold> end Pre-C++14 constexpr }}}1
 //==============================================================================
 
-#endif
+#endif // _LIBCUDACXX_STD_VER > 11
+
+#endif // _LIBCUDACXX___MDSPAN_MACROS_HPP

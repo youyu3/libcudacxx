@@ -44,13 +44,20 @@
 #ifndef _LIBCUDACXX___MDSPAN_DEFAULT_ACCESSOR_HPP
 #define _LIBCUDACXX___MDSPAN_DEFAULT_ACCESSOR_HPP
 
-#include "macros.h"
-
 #ifndef __cuda_std__
+#include <__config>
 #include <cstddef> // size_t
+#endif // __cuda_std__
+
+#include "../__mdspan/macros.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
 #endif
 
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
 
 template <class _ElementType>
 struct default_accessor {
@@ -84,7 +91,8 @@ struct default_accessor {
 
 };
 
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
-
-#endif
+#endif // _LIBCUDACXX___MDSPAN_DEFAULT_ACCESSOR_HPP

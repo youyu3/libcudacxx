@@ -44,22 +44,30 @@
 #ifndef _LIBCUDACXX___MDSPAN_STANDARD_LAYOUT_STATIC_ARRAY_HPP
 #define _LIBCUDACXX___MDSPAN_STANDARD_LAYOUT_STATIC_ARRAY_HPP
 
-#include "macros.h"
-#include "dynamic_extent.h"
-#include "compressed_pair.h"
-
-#if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
-#  include "no_unique_address.h"
-#endif
-
 #ifndef __cuda_std__
+#include <__config>
 #include <array>
+#include <cstddef>
 #include <span>
 #include <utility> // integer_sequence
-#include <cstddef>
+#endif // __cuda_std__
+
+#include "../__mdspan/compressed_pair.h"
+#include "../__mdspan/dynamic_extent.h"
+#include "../__mdspan/macros.h"
+#if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
+#include "../__mdspan/no_unique_address.h"
+#endif
+#include "../__type_traits/enable_if.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
 #endif
 
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
+
 namespace detail {
 
 //==============================================================================
@@ -666,6 +674,9 @@ public:
 #endif // __MDSPAN_PRESERVE_STATIC_LAYOUT
 
 } // end namespace detail
+
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
-#endif
+#endif // _LIBCUDACXX___MDSPAN_STANDARD_LAYOUT_STATIC_ARRAY_HPP

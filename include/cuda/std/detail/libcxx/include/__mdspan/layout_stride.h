@@ -44,25 +44,39 @@
 #ifndef _LIBCUDACXX___MDSPAN_LAYOUT_STRIDE_HPP
 #define _LIBCUDACXX___MDSPAN_LAYOUT_STRIDE_HPP
 
-#include "macros.h"
-#include "static_array.h"
-#include "extents.h"
-#include "compressed_pair.h"
-
-#if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
-#  include "no_unique_address.h"
-#endif
-
 #ifndef __cuda_std__
+#include <__config>
 #include <algorithm>
-#include <numeric>
 #include <array>
-#endif
-#if  __MDSPAN_USE_CONCEPTS && __MDSPAN_HAS_CXX_20
+#if __MDSPAN_USE_CONCEPTS && __MDSPAN_HAS_CXX_20
 #include<concepts>
+#endif
+#include <numeric>
+#include <span>
+#include <utility>
+#endif // __cuda_std__
+
+#include "../__mdspan/compressed_pair.h"
+#include "../__mdspan/extents.h"
+#include "../__mdspan/macros.h"
+#if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
+#include "../__mdspan/no_unique_address.h"
+#endif
+#include "../__mdspan/static_array.h"
+#include "../__type_traits/is_same.h"
+#include "../__type_traits/is_constructible.h"
+#include "../__type_traits/is_convertible.h"
+#include "../__type_traits/is_nothrow_constructible.h"
+#include "../__type_traits/remove_const.h"
+#include "../__utility/move.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
 #endif
 
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
 
 struct layout_left {
   template<class _Extents>
@@ -532,6 +546,8 @@ struct layout_stride {
   };
 };
 
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
-#endif
+#endif // _LIBCUDACXX___MDSPAN_LAYOUT_STRIDE_HPP

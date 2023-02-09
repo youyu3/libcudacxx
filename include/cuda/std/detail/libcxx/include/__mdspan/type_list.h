@@ -44,9 +44,19 @@
 #ifndef _LIBCUDACXX___MDSPAN_TYPE_LIST_HPP
 #define _LIBCUDACXX___MDSPAN_TYPE_LIST_HPP
 
-#include "macros.h"
+#ifndef __cuda_std__
+#include <__config>
+#endif // __cuda_std__
+
+#include "../__mdspan/macros.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
+#endif
 
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
 
 //==============================================================================
 
@@ -115,7 +125,8 @@ struct __type_at<3, __type_list<_T0, _T1, _T2, _T3, _Ts...>> {
 
 //==============================================================================
 
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
-
-#endif
+#endif // _LIBCUDACXX___MDSPAN_TYPE_LIST_HPP

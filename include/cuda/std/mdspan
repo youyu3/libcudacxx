@@ -4,6 +4,7 @@
 // under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// SPDX-FileCopyrightText: Copyright (c) 2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 //
 //===----------------------------------------------------------------------===//
 
@@ -15,7 +16,6 @@
 #include "cstddef"
 #include "limits"
 #include "tuple"
-#include "type_traits"
 #include "utility"
 #include "version"
 
@@ -29,4 +29,4 @@
 
 #include "detail/__pragma_pop"
 
-#endif //_CUDA_MDSPAN
+#endif // _CUDA_MDSPAN

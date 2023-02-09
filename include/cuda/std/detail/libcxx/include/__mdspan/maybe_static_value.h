@@ -44,19 +44,28 @@
 #ifndef _LIBCUDACXX___MDSPAN_MAYBE_STATIC_VALUE_HPP
 #define _LIBCUDACXX___MDSPAN_MAYBE_STATIC_VALUE_HPP
 
-#include "macros.h"
+#ifndef __cuda_std__
+#include <__config>
+#endif // __cuda_std__
 
-#include "dynamic_extent.h"
-
+#include "../__mdspan/dynamic_extent.h"
+#include "../__mdspan/macros.h"
 #if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
-#  include "no_unique_address.h"
+#include "../__mdspan/no_unique_address.h"
+#endif
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
 #endif
 
 // This is only needed for the non-standard-layout version of partially
 // static array.
 // Needs to be after the includes above to work with the single header generator
 #if !__MDSPAN_PRESERVE_STANDARD_LAYOUT
+
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
 
 //==============================================================================
 
@@ -148,8 +157,11 @@ struct __maybe_static_value<_dynamic_t, _static_t, __is_dynamic_sentinal, __is_d
 
 //==============================================================================
 
+
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
 #endif // !__MDSPAN_PRESERVE_STANDARD_LAYOUT
 
-#endif
+#endif // _LIBCUDACXX___MDSPAN_MAYBE_STATIC_VALUE_HPP

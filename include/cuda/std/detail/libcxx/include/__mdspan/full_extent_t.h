@@ -44,14 +44,26 @@
 #ifndef _LIBCUDACXX___MDSPAN_FULL_EXTENT_T_HPP
 #define _LIBCUDACXX___MDSPAN_FULL_EXTENT_T_HPP
 
-#include "macros.h"
+#ifndef __cuda_std__
+#include <__config>
+#endif // __cuda_std__
+
+#include "../__mdspan/macros.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
+#endif
 
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
 
 struct full_extent_t { explicit full_extent_t() = default; };
 
 __MDSPAN_INLINE_VARIABLE constexpr auto full_extent = full_extent_t{ };
 
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
-#endif
+#endif // _LIBCUDACXX___MDSPAN_FULL_EXTENT_T_HPP

@@ -45,18 +45,9 @@
 #define _LIBCUDACXX_MDSPAN
 
 #ifndef __cuda_std__
-#include "array"
-#include "span"
-#include "cstddef"
-#include "limits"
-#include "tuple"
-#include "type_traits"
-#include "utility"
-#include "version"
-#include <__pragma_push>
-#endif // __cuda_std__
-
-#if _LIBCUDACXX_STD_VER > 11
+#include <__config>
+#include <version>
+#endif //__cuda_std__
 
 #include "__mdspan/default_accessor.h"
 #include "__mdspan/full_extent_t.h"
@@ -70,10 +61,4 @@
 #include "__mdspan/static_array.h"
 #include "__mdspan/submdspan.h"
 
-#endif // _LIBCUDACXX_STD_VER > 11
-
-#ifndef __cuda_std__
-#include <__pragma_pop>
-#endif // __cuda_std__
-
-#endif
+#endif // _LIBCUDACXX_MDSPAN

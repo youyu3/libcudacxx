@@ -44,6 +44,12 @@
 #ifndef _LIBCUDACXX___MDSPAN_CONFIG_HPP
 #define _LIBCUDACXX___MDSPAN_CONFIG_HPP
 
+#ifndef __cuda_std__
+#include <__config>
+#endif // __cuda_std__
+
+#if _LIBCUDACXX_STD_VER > 11
+
 #ifndef __has_include
 #  define __has_include(x) 0
 #endif
@@ -293,4 +299,6 @@ static_assert(__MDSPAN_CPLUSPLUS >= __MDSPAN_CXX_STD_14, "mdspan requires C++14 
 #  define __MDSPAN_OP6(mds, a, b, c, d, e, f) mds(a,b,c,d,e,f)
 #endif
 
-#endif
+#endif // _LIBCUDACXX_STD_VER > 11
+
+#endif // _LIBCUDACXX___MDSPAN_CONFIG_HPP

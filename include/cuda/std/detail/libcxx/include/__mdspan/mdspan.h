@@ -45,12 +45,33 @@
 #ifndef _LIBCUDACXX___MDSPAN_MDSPAN_HPP
 #define _LIBCUDACXX___MDSPAN_MDSPAN_HPP
 
-#include "default_accessor.h"
-#include "layout_right.h"
-#include "extents.h"
-#include "compressed_pair.h"
+#ifndef __cuda_std__
+#include <__config>
+#include <array>
+#include <span>
+#include <utility>
+#endif // __cuda_std__
+
+#include "../__mdspan/default_accessor.h"
+#include "../__mdspan/layout_right.h"
+#include "../__mdspan/extents.h"
+#include "../__mdspan/compressed_pair.h"
+#include "../__type_traits/is_constructible.h"
+#include "../__type_traits/is_convertible.h"
+#include "../__type_traits/is_default_constructible.h"
+#include "../__type_traits/is_nothrow_constructible.h"
+#include "../__type_traits/remove_cv.h"
+#include "../__type_traits/remove_pointer.h"
+#include "../__type_traits/remove_reference.h"
+#include "../__type_traits/remove_all_extents.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
+#endif
 
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
 
 template <
   class _ElementType,
@@ -434,6 +455,8 @@ mdspan(const typename _AccessorType::data_handle_type, const _MappingType&, cons
   -> mdspan<typename _AccessorType::element_type, typename _MappingType::extents_type, typename _MappingType::layout_type, _AccessorType>;
 #endif
 
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
-#endif
+#endif // _LIBCUDACXX___MDSPAN_MDSPAN_HPP

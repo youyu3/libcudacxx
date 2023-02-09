@@ -44,22 +44,30 @@
 #ifndef _LIBCUDACXX___MDSPAN_STATIC_ARRAY_HPP
 #define _LIBCUDACXX___MDSPAN_STATIC_ARRAY_HPP
 
-#include "macros.h"
-
-#include "dynamic_extent.h"
-#include "maybe_static_value.h"
-#include "standard_layout_static_array.h"
-#include "type_list.h"
-
-// Needs to be after the includes above to work with the single header generator
-#if !__MDSPAN_PRESERVE_STANDARD_LAYOUT
 #ifndef __cuda_std__
-#include <cstddef> // size_t
-#include <utility> // integer_sequence
+#include <__config>
 #include <array>
+#include <cstddef>
+#include <span>
+#include <utility> // integer_sequence
+#endif // __cuda_std__
+
+#include "../__mdspan/dynamic_extent.h"
+#include "../__mdspan/macros.h"
+#include "../__mdspan/maybe_static_value.h"
+#include "../__mdspan/standard_layout_static_array.h"
+#include "../__mdspan/type_list.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
 #endif
 
+#if !__MDSPAN_PRESERVE_STANDARD_LAYOUT
+
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
+
 namespace detail {
 
 //==============================================================================
@@ -281,8 +289,11 @@ template <class T, class _static_t, _static_t... __values_or_sentinals>
 using __partially_static_sizes_tagged = __partially_static_sizes<T, _static_t, __values_or_sentinals...>;
 
 } // end namespace detail
+
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
 #endif // !__MDSPAN_PRESERVE_STANDARD_LAYOUT
 
-#endif
+#endif // _LIBCUDACXX___MDSPAN_STATIC_ARRAY_HPP

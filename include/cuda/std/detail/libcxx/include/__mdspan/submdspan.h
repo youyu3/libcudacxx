@@ -45,20 +45,35 @@
 #ifndef _LIBCUDACXX___MDSPAN_SUBMDSPAN_HPP
 #define _LIBCUDACXX___MDSPAN_SUBMDSPAN_HPP
 
-#include "mdspan.h"
-#include "full_extent_t.h"
-#include "dynamic_extent.h"
-#include "layout_left.h"
-#include "layout_right.h"
-#include "layout_stride.h"
-#include "macros.h"
-
 #ifndef __cuda_std__
+#include <__config>
 #include <tuple> // apply
 #include <utility> // pair
+#endif // __cuda_std__
+
+#include "../__mdspan/dynamic_extent.h"
+#include "../__mdspan/full_extent_t.h"
+#include "../__mdspan/layout_left.h"
+#include "../__mdspan/layout_right.h"
+#include "../__mdspan/layout_stride.h"
+#include "../__mdspan/macros.h"
+#include "../__mdspan/mdspan.h"
+#include "../__type_traits/conditional.h"
+#include "../__type_traits/integral_constant.h"
+#include "../__type_traits/is_convertible.h"
+#include "../__type_traits/is_same.h"
+#include "../__type_traits/is_signed.h"
+#include "../__type_traits/remove_const.h"
+#include "../__type_traits/remove_reference.h"
+#include "../__utility/move.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
 #endif
 
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
 
 namespace detail {
 
@@ -397,11 +412,11 @@ struct __assign_op_slice_handler<
   }
 
    // TODO defer instantiation of this?
-  using layout_type = typename conditional<
+  using layout_type = conditional_t<
     _PreserveLayoutAnalysis::value,
     typename _PreserveLayoutAnalysis::layout_type_if_preserved,
     layout_stride
-  >::type;
+  >;
 
   // TODO noexcept specification
   template <class NewLayout>
@@ -583,6 +598,8 @@ __MDSPAN_DEDUCE_RETURN_TYPE_SINGLE_LINE(
 )
 /* clang-format: on */
 
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
-#endif
+#endif // _LIBCUDACXX___MDSPAN_SUBMDSPAN_HPP

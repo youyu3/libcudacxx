@@ -44,11 +44,25 @@
 #ifndef _LIBCUDACXX___MDSPAN_LAYOUT_RIGHT_HPP
 #define _LIBCUDACXX___MDSPAN_LAYOUT_RIGHT_HPP
 
-#include "macros.h"
-#include "extents.h"
-#include "layout_stride.h"
+#ifndef __cuda_std__
+#include <__config>
+#include <utility>
+#endif // __cuda_std__
+
+#include "../__mdspan/extents.h"
+#include "../__mdspan/layout_stride.h"
+#include "../__mdspan/macros.h"
+#include "../__type_traits/is_constructible.h"
+#include "../__type_traits/is_convertible.h"
+#include "../__type_traits/is_nothrow_constructible.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
+#endif
 
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
 
 //==============================================================================
 template <class _Extents>
@@ -251,6 +265,8 @@ private:
 
 };
 
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
-#endif
+#endif // _LIBCUDACXX___MDSPAN_LAYOUT_RIGHT_HPP

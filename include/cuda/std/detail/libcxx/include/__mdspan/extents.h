@@ -44,20 +44,38 @@
 #ifndef _LIBCUDACXX___MDSPAN_EXTENTS_HPP
 #define _LIBCUDACXX___MDSPAN_EXTENTS_HPP
 
-#include "macros.h"
-#include "static_array.h"
-#include "standard_layout_static_array.h"
-
-#if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
-#  include "no_unique_address.h"
-#endif
-
 #ifndef __cuda_std__
-#include <array>
+#include <__config>
 #include <cstddef>
+#include <array>
+#include <span>
+#include <utility>
+#endif // __cuda_std__
+
+#include "../__mdspan/macros.h"
+#if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
+#include "../__mdspan/no_unique_address.h"
 #endif
+#include "../__mdspan/static_array.h"
+#include "../__mdspan/standard_layout_static_array.h"
+#include "../__type_traits/conditional.h"
+#include "../__type_traits/integral_constant.h"
+#include "../__type_traits/is_convertible.h"
+#include "../__type_traits/is_nothrow_constructible.h"
+#include "../__type_traits/make_unsigned.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
+#endif
+
+#if defined(_LIBCUDACXX_PUSH_MACROS)
+  _LIBCUDACXX_PUSH_MACROS
+#endif
+#include "../__undef_macros"
 
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
 
 namespace detail {
 
@@ -543,6 +561,13 @@ template <typename _Extents>
 using __extents_to_partially_static_sizes_t = typename __extents_to_partially_static_sizes<_Extents>::type;
 
 } // end namespace detail
+
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
+#if defined(_LIBCUDACXX_POP_MACROS)
+  _LIBCUDACXX_POP_MACROS
 #endif
+
+#endif // _LIBCUDACXX___MDSPAN_EXTENTS_HPP

@@ -44,9 +44,24 @@
 #ifndef _LIBCUDACXX___MDSPAN_NO_UNIQUE_ADDRESS_HPP
 #define _LIBCUDACXX___MDSPAN_NO_UNIQUE_ADDRESS_HPP
 
-#include "macros.h"
+#ifndef __cuda_std__
+#include <__config>
+#endif // __cuda_std__
+
+#include "../__mdspan/macros.h"
+#include "../__type_traits/enable_if.h"
+#include "../__type_traits/is_empty.h"
+#include "../__type_traits/is_trivially_destructible.h"
+#include "../__utility/move.h"
+
+#if defined(_LIBCUDACXX_USE_PRAGMA_GCC_SYSTEM_HEADER)
+#pragma GCC system_header
+#endif
 
 _LIBCUDACXX_BEGIN_NAMESPACE_STD
+
+#if _LIBCUDACXX_STD_VER > 11
+
 namespace detail {
 
 //==============================================================================
@@ -122,6 +137,9 @@ struct __no_unique_address_emulation<
 //==============================================================================
 
 } // end namespace detail
+
+#endif // _LIBCUDACXX_STD_VER > 11
+
 _LIBCUDACXX_END_NAMESPACE_STD
 
-#endif
+#endif // _LIBCUDACXX___MDSPAN_NO_UNIQUE_ADDRESS_HPP
