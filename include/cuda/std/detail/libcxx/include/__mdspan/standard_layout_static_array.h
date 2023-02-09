@@ -68,7 +68,7 @@ _LIBCUDACXX_BEGIN_NAMESPACE_STD
 
 #if _LIBCUDACXX_STD_VER > 11
 
-namespace detail {
+namespace __detail {
 
 //==============================================================================
 
@@ -673,7 +673,7 @@ public:
 
 #endif // __MDSPAN_PRESERVE_STATIC_LAYOUT
 
-} // end namespace detail
+} // end namespace __detail
 
 #endif // _LIBCUDACXX_STD_VER > 11
 

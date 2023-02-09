@@ -69,7 +69,7 @@ _LIBCUDACXX_BEGIN_NAMESPACE_STD
 
 //==============================================================================
 
-namespace detail {
+namespace __detail {
 
 // static case
 template <class _dynamic_t, class _static_t, _static_t __v,
@@ -153,7 +153,7 @@ struct __maybe_static_value<_dynamic_t, _static_t, __is_dynamic_sentinal, __is_d
 #endif
 };
 
-} // namespace detail
+} // namespace __detail
 
 //==============================================================================
 

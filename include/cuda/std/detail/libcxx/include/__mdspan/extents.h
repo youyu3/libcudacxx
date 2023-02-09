@@ -77,24 +77,24 @@ _LIBCUDACXX_BEGIN_NAMESPACE_STD
 
 #if _LIBCUDACXX_STD_VER > 11
 
-namespace detail {
+namespace __detail {
 
 template<size_t ... _Extents>
-struct _count_dynamic_extents;
+struct __count_dynamic_extents;
 
 template<size_t _Ep, size_t ... _Extents>
-struct _count_dynamic_extents<_Ep,_Extents...> {
-  static constexpr size_t val = (_Ep==dynamic_extent?1:0) + _count_dynamic_extents<_Extents...>::val;
+struct __count_dynamic_extents<_Ep,_Extents...> {
+  static constexpr size_t val = (_Ep==dynamic_extent?1:0) + __count_dynamic_extents<_Extents...>::val;
 };
 
 template<>
-struct _count_dynamic_extents<> {
+struct __count_dynamic_extents<> {
   static constexpr size_t val = 0;
 };
 
 template <size_t... _Extents, size_t... _OtherExtents>
 __MDSPAN_HOST_DEVICE
-static constexpr false_type _check_compatible_extents(
+static constexpr false_type __check_compatible_extents(
   false_type, _CUDA_VSTD::integer_sequence<size_t, _Extents...>, _CUDA_VSTD::integer_sequence<size_t, _OtherExtents...>
 ) noexcept { return { }; }
 
@@ -110,19 +110,19 @@ static integral_constant<
   )
 >
 __MDSPAN_HOST_DEVICE
-_check_compatible_extents(
+__check_compatible_extents(
   true_type, _CUDA_VSTD::integer_sequence<size_t, _Extents...>, _CUDA_VSTD::integer_sequence<size_t, _OtherExtents...>
 ) noexcept { return { }; }
 
 struct __extents_tag { };
 
-} // end namespace detail
+} // end namespace __detail
 
 template <class _ThisIndexType, size_t... _Extents>
 class extents
 #if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
-  : private detail::__no_unique_address_emulation<
-      detail::__partially_static_sizes_tagged<detail::__extents_tag, _ThisIndexType , size_t, _Extents...>>
+  : private __detail::__no_unique_address_emulation<
+      __detail::__partially_static_sizes_tagged<__detail::__extents_tag, _ThisIndexType , size_t, _Extents...>>
 #endif
 {
 public:
@@ -132,12 +132,12 @@ public:
   using size_type = make_unsigned_t<index_type>;
 
 // internal typedefs which for technical reasons are public
-  using __storage_t = detail::__partially_static_sizes_tagged<detail::__extents_tag, index_type, size_t, _Extents...>;
+  using __storage_t = __detail::__partially_static_sizes_tagged<__detail::__extents_tag, index_type, size_t, _Extents...>;
 
 #if defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
   __MDSPAN_NO_UNIQUE_ADDRESS __storage_t __storage_;
 #else
-  using __base_t = detail::__no_unique_address_emulation<__storage_t>;
+  using __base_t = __detail::__no_unique_address_emulation<__storage_t>;
 #endif
 
 // private members dealing with the way we internally store dynamic extents
@@ -229,7 +229,7 @@ public:
     class _OtherIndexType, size_t... _OtherExtents,
     /* requires */ (
       /* multi-stage check to protect from invalid pack expansion when sizes don't match? */
-      decltype(detail::_check_compatible_extents(
+      decltype(__detail::__check_compatible_extents(
         integral_constant<bool, sizeof...(_Extents) == sizeof...(_OtherExtents)>{},
         _CUDA_VSTD::integer_sequence<size_t, _Extents...>{},
         _CUDA_VSTD::integer_sequence<size_t, _OtherExtents...>{}
@@ -271,7 +271,7 @@ public:
       __MDSPAN_FOLD_AND(__MDSPAN_TRAIT(_CUDA_VSTD::is_convertible, _Integral, index_type) /* && ... */) &&
       __MDSPAN_FOLD_AND(__MDSPAN_TRAIT(_CUDA_VSTD::is_nothrow_constructible, index_type, _Integral) /* && ... */) &&
       // NVCC chokes on the fold thingy here so wrote the workaround
-      ((sizeof...(_Integral) == detail::_count_dynamic_extents<_Extents...>::val) ||
+      ((sizeof...(_Integral) == __detail::__count_dynamic_extents<_Extents...>::val) ||
        (sizeof...(_Integral) == sizeof...(_Extents)))
       )
     )
@@ -293,8 +293,8 @@ public:
     : __base_t(__base_t{typename __base_t::__stored_type{
 #endif
       _CUDA_VSTD::conditional_t<sizeof...(_Integral)==rank_dynamic(),
-        detail::__construct_psa_from_dynamic_exts_values_tag_t,
-        detail::__construct_psa_from_all_exts_values_tag_t>(),
+        __detail::__construct_psa_from_dynamic_exts_values_tag_t,
+        __detail::__construct_psa_from_all_exts_values_tag_t>(),
         static_cast<index_type>(__exts)...
 #if defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
       }
@@ -319,7 +319,7 @@ public:
     /* requires */ (
       __MDSPAN_TRAIT(_CUDA_VSTD::is_convertible, _IndexType, index_type) &&
       __MDSPAN_TRAIT(_CUDA_VSTD::is_nothrow_constructible, index_type, _IndexType) &&
-      ((_Np == detail::_count_dynamic_extents<_Extents...>::val) ||
+      ((_Np == __detail::__count_dynamic_extents<_Extents...>::val) ||
        (_Np == sizeof...(_Extents)))
     )
   )
@@ -343,8 +343,8 @@ public:
     : __base_t(__base_t{typename __base_t::__stored_type{
 #endif
       _CUDA_VSTD::conditional_t<_Np==rank_dynamic(),
-        detail::__construct_psa_from_dynamic_exts_array_tag_t<0>,
-        detail::__construct_psa_from_all_exts_array_tag_t>(),
+        __detail::__construct_psa_from_dynamic_exts_array_tag_t<0>,
+        __detail::__construct_psa_from_all_exts_array_tag_t>(),
       _CUDA_VSTD::array<_IndexType,_Np>{__exts}
 #if defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
       }
@@ -369,7 +369,7 @@ public:
     /* requires */ (
       __MDSPAN_TRAIT(_CUDA_VSTD::is_convertible, _IndexType, index_type) &&
       __MDSPAN_TRAIT(_CUDA_VSTD::is_nothrow_constructible, index_type, _IndexType) &&
-      ((_Np == detail::_count_dynamic_extents<_Extents...>::val) ||
+      ((_Np == __detail::__count_dynamic_extents<_Extents...>::val) ||
        (_Np == sizeof...(_Extents)))
     )
   )
@@ -393,8 +393,8 @@ public:
     : __base_t(__base_t{typename __base_t::__stored_type{
 #endif
       _CUDA_VSTD::conditional_t<_Np==rank_dynamic(),
-        detail::__construct_psa_from_dynamic_exts_array_tag_t<0>,
-        detail::__construct_psa_from_all_exts_array_tag_t>(),
+        __detail::__construct_psa_from_dynamic_exts_array_tag_t<0>,
+        __detail::__construct_psa_from_all_exts_array_tag_t>(),
       __exts
 #if defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
       }
@@ -473,7 +473,7 @@ public:
 public:  // (but not really)
 
   __MDSPAN_INLINE_FUNCTION static constexpr
-  extents __make_extents_impl(detail::__partially_static_sizes<index_type, size_t,_Extents...>&& __bs) noexcept {
+  extents __make_extents_impl(__detail::__partially_static_sizes<index_type, size_t,_Extents...>&& __bs) noexcept {
     // This effectively amounts to a sideways cast that can be done in a constexpr
     // context, but we have to do it to handle the case where the extents and the
     // strides could accidentally end up with the same types in their hierarchies
@@ -482,7 +482,7 @@ public:  // (but not really)
 #if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
       __base_t{
 #endif
-        _CUDA_VSTD::move(__bs.template __with_tag<detail::__extents_tag>())
+        _CUDA_VSTD::move(__bs.template __with_tag<__detail::__extents_tag>())
 #if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
       }
 #endif
@@ -505,7 +505,7 @@ public:  // (but not really)
 
 };
 
-namespace detail {
+namespace __detail {
 
 template <class _IndexType, size_t _Rank, class _Extents = _CUDA_VSTD::extents<_IndexType>>
 struct __make_dextents;
@@ -521,21 +521,21 @@ struct __make_dextents<_IndexType, 0, _CUDA_VSTD::extents<_IndexType, _ExtentsPa
   using type = _CUDA_VSTD::extents<_IndexType, _ExtentsPack...>;
 };
 
-} // end namespace detail
+} // end namespace __detail
 
 template <class _IndexType, size_t _Rank>
-using dextents = typename detail::__make_dextents<_IndexType, _Rank>::type;
+using dextents = typename __detail::__make_dextents<_IndexType, _Rank>::type;
 
 #if defined(__MDSPAN_USE_CLASS_TEMPLATE_ARGUMENT_DEDUCTION)
 template <class... _IndexTypes>
 extents(_IndexTypes...)
   // Workaround for nvcc
-  //-> extents<size_t, detail::__make_dynamic_extent<_IndexTypes>()...>;
+  //-> extents<size_t, __detail::__make_dynamic_extent<_IndexTypes>()...>;
   // Adding "(void)" so that clang doesn't complain this is unused
   -> extents<size_t, size_t(((void)_IndexTypes(), -1))...>;
 #endif
 
-namespace detail {
+namespace __detail {
 
 template <class _Tp>
 struct __is_extents : false_type {};
@@ -552,7 +552,7 @@ struct __extents_to_partially_static_sizes;
 
 template <class _IndexType, size_t... _ExtentsPack>
 struct __extents_to_partially_static_sizes<_CUDA_VSTD::extents<_IndexType, _ExtentsPack...>> {
-  using type = detail::__partially_static_sizes<
+  using type = __detail::__partially_static_sizes<
           typename _CUDA_VSTD::extents<_IndexType, _ExtentsPack...>::index_type, size_t,
           _ExtentsPack...>;
 };
@@ -560,7 +560,7 @@ struct __extents_to_partially_static_sizes<_CUDA_VSTD::extents<_IndexType, _Exte
 template <typename _Extents>
 using __extents_to_partially_static_sizes_t = typename __extents_to_partially_static_sizes<_Extents>::type;
 
-} // end namespace detail
+} // end namespace __detail
 
 #endif // _LIBCUDACXX_STD_VER > 11
 

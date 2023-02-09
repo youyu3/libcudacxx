@@ -68,7 +68,7 @@ _LIBCUDACXX_BEGIN_NAMESPACE_STD
 
 #if _LIBCUDACXX_STD_VER > 11
 
-namespace detail {
+namespace __detail {
 
 //==============================================================================
 
@@ -288,7 +288,7 @@ public:
 template <class T, class _static_t, _static_t... __values_or_sentinals>
 using __partially_static_sizes_tagged = __partially_static_sizes<T, _static_t, __values_or_sentinals...>;
 
-} // end namespace detail
+} // end namespace __detail
 
 #endif // _LIBCUDACXX_STD_VER > 11
 

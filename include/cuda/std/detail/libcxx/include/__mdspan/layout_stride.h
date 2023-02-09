@@ -87,7 +87,7 @@ struct layout_right {
     class mapping;
 };
 
-namespace detail {
+namespace __detail {
   template<class _Layout, class _Mapping>
   constexpr bool __is_mapping_of =
     _CUDA_VSTD::is_same<typename _Layout::template mapping<typename _Mapping::extents_type>, _Mapping>::value;
@@ -104,14 +104,14 @@ namespace detail {
     bool_constant<_Mp::is_always_unique()>::value;
   };
 #endif
-} // namespace detail
+} // namespace __detail
 
 struct layout_stride {
   template <class _Extents>
   class mapping
 #if !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
-    : private detail::__no_unique_address_emulation<
-        detail::__compressed_pair<
+    : private __detail::__no_unique_address_emulation<
+        __detail::__compressed_pair<
           _Extents,
           _CUDA_VSTD::array<typename _Extents::index_type, _Extents::rank()>
         >
@@ -126,7 +126,7 @@ struct layout_stride {
     using layout_type = layout_stride;
 
     // This could be a `requires`, but I think it's better and clearer as a `static_assert`.
-    static_assert(detail::__is_extents_v<_Extents>, "layout_stride::mapping must be instantiated with a specialization of _CUDA_VSTD::extents.");
+    static_assert(__detail::__is_extents_v<_Extents>, "layout_stride::mapping must be instantiated with a specialization of _CUDA_VSTD::extents.");
 
 
   private:
@@ -134,12 +134,12 @@ struct layout_stride {
     //----------------------------------------------------------------------------
 
     using __strides_storage_t = _CUDA_VSTD::array<index_type, extents_type::rank()>;//_CUDA_VSTD::dextents<index_type, extents_type::rank()>;
-    using __member_pair_t = detail::__compressed_pair<extents_type, __strides_storage_t>;
+    using __member_pair_t = __detail::__compressed_pair<extents_type, __strides_storage_t>;
 
 #if defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
     __MDSPAN_NO_UNIQUE_ADDRESS __member_pair_t __members;
 #else
-    using __base_t = detail::__no_unique_address_emulation<__member_pair_t>;
+    using __base_t = __detail::__no_unique_address_emulation<__member_pair_t>;
 #endif
 
     __MDSPAN_FORCE_INLINE_FUNCTION constexpr __strides_storage_t const&
@@ -229,7 +229,7 @@ struct layout_stride {
 
       __MDSPAN_INLINE_FUNCTION
       static constexpr const __strides_storage_t fill_strides(
-        detail::__extents_to_partially_static_sizes_t<
+        __detail::__extents_to_partially_static_sizes_t<
           _CUDA_VSTD::dextents<index_type, extents_type::rank()>>&& __s) {
         return __strides_storage_t{static_cast<index_type>(__s.template __get_n<_Idxs>())...};
       }
@@ -262,8 +262,8 @@ struct layout_stride {
     __MDSPAN_INLINE_FUNCTION
     static constexpr mapping
     __make_mapping(
-      detail::__extents_to_partially_static_sizes_t<_Extents>&& __exts,
-      detail::__extents_to_partially_static_sizes_t<
+      __detail::__extents_to_partially_static_sizes_t<_Extents>&& __exts,
+      __detail::__extents_to_partially_static_sizes_t<
         _CUDA_VSTD::dextents<index_type, _Extents::rank()>>&& __strs
     ) noexcept {
       // call the private constructor we created for this purpose
@@ -369,7 +369,7 @@ struct layout_stride {
       class _StridedLayoutMapping,
       /* requires */ (
         __MDSPAN_TRAIT(_CUDA_VSTD::is_constructible, extents_type, typename _StridedLayoutMapping::extents_type) &&
-        detail::__is_mapping_of<typename _StridedLayoutMapping::layout_type, _StridedLayoutMapping> &&
+        __detail::__is_mapping_of<typename _StridedLayoutMapping::layout_type, _StridedLayoutMapping> &&
         _StridedLayoutMapping::is_always_unique() &&
         _StridedLayoutMapping::is_always_strided()
       )
@@ -377,7 +377,7 @@ struct layout_stride {
 #else
     template<class _StridedLayoutMapping>
     requires(
-         detail::__layout_mapping_alike<_StridedLayoutMapping> &&
+         __detail::__layout_mapping_alike<_StridedLayoutMapping> &&
          __MDSPAN_TRAIT(_CUDA_VSTD::is_constructible, extents_type, typename _StridedLayoutMapping::extents_type) &&
          _StridedLayoutMapping::is_always_unique() &&
          _StridedLayoutMapping::is_always_strided()
@@ -385,9 +385,9 @@ struct layout_stride {
 #endif
     __MDSPAN_CONDITIONAL_EXPLICIT(
       (!_CUDA_VSTD::is_convertible<typename _StridedLayoutMapping::extents_type, extents_type>::value) &&
-      (detail::__is_mapping_of<layout_left, _StridedLayoutMapping> ||
-       detail::__is_mapping_of<layout_right, _StridedLayoutMapping> ||
-       detail::__is_mapping_of<layout_stride, _StridedLayoutMapping>)
+      (__detail::__is_mapping_of<layout_left, _StridedLayoutMapping> ||
+       __detail::__is_mapping_of<layout_right, _StridedLayoutMapping> ||
+       __detail::__is_mapping_of<layout_stride, _StridedLayoutMapping>)
     ) // needs two () due to comma
     __MDSPAN_INLINE_FUNCTION constexpr
     mapping(_StridedLayoutMapping const& __other) noexcept // NOLINT(google-explicit-constructor)
@@ -482,7 +482,7 @@ struct layout_stride {
     __MDSPAN_TEMPLATE_REQUIRES(
       class _StridedLayoutMapping,
       /* requires */ (
-        detail::__is_mapping_of<typename _StridedLayoutMapping::layout_type, _StridedLayoutMapping> &&
+        __detail::__is_mapping_of<typename _StridedLayoutMapping::layout_type, _StridedLayoutMapping> &&
         (extents_type::rank() == _StridedLayoutMapping::extents_type::rank()) &&
         _StridedLayoutMapping::is_always_strided()
       )
@@ -490,7 +490,7 @@ struct layout_stride {
 #else
     template<class _StridedLayoutMapping>
     requires(
-         detail::__layout_mapping_alike<_StridedLayoutMapping> &&
+         __detail::__layout_mapping_alike<_StridedLayoutMapping> &&
          (extents_type::rank() == _StridedLayoutMapping::extents_type::rank()) &&
          _StridedLayoutMapping::is_always_strided()
     )
@@ -521,7 +521,7 @@ struct layout_stride {
     __MDSPAN_TEMPLATE_REQUIRES(
       class _StridedLayoutMapping,
       /* requires */ (
-        detail::__is_mapping_of<typename _StridedLayoutMapping::layout_type, _StridedLayoutMapping> &&
+        __detail::__is_mapping_of<typename _StridedLayoutMapping::layout_type, _StridedLayoutMapping> &&
         (extents_type::rank() == _StridedLayoutMapping::extents_type::rank()) &&
         _StridedLayoutMapping::is_always_strided()
       )

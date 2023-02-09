@@ -75,7 +75,7 @@ _LIBCUDACXX_BEGIN_NAMESPACE_STD
 
 #if _LIBCUDACXX_STD_VER > 11
 
-namespace detail {
+namespace __detail {
 
 template <size_t _OldExtent, size_t _OldStaticStride, class _Tp>
 struct __slice_wrap {
@@ -475,9 +475,9 @@ constexpr auto _submdspan_impl(
   auto __handled =
     __MDSPAN_FOLD_ASSIGN_LEFT(
       (
-        detail::__assign_op_slice_handler<
+        __detail::__assign_op_slice_handler<
           __index_t,
-          detail::preserve_layout_analysis<_LP>
+          __detail::preserve_layout_analysis<_LP>
         >{
           __partially_static_sizes<__index_t, size_t>{},
           __partially_static_sizes<__index_t, size_t>{},
@@ -485,7 +485,7 @@ constexpr auto _submdspan_impl(
         }
       ),
         /* = ... = */
-      detail::__wrap_slice<
+      __detail::__wrap_slice<
         _Exts, dynamic_extent
       >(
         __slices, __src.extents().template __extent<_Idxs>(),
@@ -534,9 +534,9 @@ __MDSPAN_DEDUCE_RETURN_TYPE_SINGLE_LINE(
       __src,
       __MDSPAN_FOLD_ASSIGN_LEFT(
         (
-          detail::__assign_op_slice_handler<
+          __detail::__assign_op_slice_handler<
             size_t,
-            detail::preserve_layout_analysis<_LP>
+            __detail::preserve_layout_analysis<_LP>
           >{
             __partially_static_sizes<_ST, size_t>{},
             __partially_static_sizes<_ST, size_t>{},
@@ -544,7 +544,7 @@ __MDSPAN_DEDUCE_RETURN_TYPE_SINGLE_LINE(
           }
         ),
         /* = ... = */
-        detail::__wrap_slice<
+        __detail::__wrap_slice<
           _Exts, dynamic_extent
         >(
           __slices, __src.extents().template __extent<_Idxs>(), __src.mapping().stride(_Idxs)
@@ -564,7 +564,7 @@ struct _is_layout_stride<
 > : true_type
 { };
 
-} // namespace detail
+} // namespace __detail
 
 //==============================================================================
 
@@ -574,7 +574,7 @@ __MDSPAN_TEMPLATE_REQUIRES(
     (
       __MDSPAN_TRAIT(_CUDA_VSTD::is_same, _LP, layout_left)
         || __MDSPAN_TRAIT(_CUDA_VSTD::is_same, _LP, layout_right)
-        || detail::_is_layout_stride<_LP>::value
+        || __detail::_is_layout_stride<_LP>::value
     ) &&
     __MDSPAN_FOLD_AND((
       __MDSPAN_TRAIT(_CUDA_VSTD::is_convertible, _SliceSpecs, size_t)
@@ -593,7 +593,7 @@ __MDSPAN_DEDUCE_RETURN_TYPE_SINGLE_LINE(
   ),
   (
     /* return */
-      detail::_submdspan_impl(_CUDA_VSTD::make_index_sequence<sizeof...(_SliceSpecs)>{}, __src, __slices...) /*;*/
+      __detail::_submdspan_impl(_CUDA_VSTD::make_index_sequence<sizeof...(_SliceSpecs)>{}, __src, __slices...) /*;*/
   )
 )
 /* clang-format: on */

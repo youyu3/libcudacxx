@@ -61,7 +61,7 @@ class layout_foo::mapping {
     using layout_type = layout_foo;
   private:
 
-    static_assert(cuda::std::detail::__is_extents_v<extents_type>,
+    static_assert(cuda::std::__detail::__is_extents_v<extents_type>,
                   "layout_foo::mapping must be instantiated with a specialization of cuda::std::extents.");
     static_assert(extents_type::rank() < 3, "layout_foo only supports 0D, 1D and 2D");
 

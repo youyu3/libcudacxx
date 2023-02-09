@@ -82,7 +82,7 @@ template <
 class mdspan
 {
 private:
-  static_assert(detail::__is_extents_v<_Extents>, "mdspan's Extents template parameter must be a specialization of _CUDA_VSTD::extents.");
+  static_assert(__detail::__is_extents_v<_Extents>, "mdspan's Extents template parameter must be a specialization of _CUDA_VSTD::extents.");
 
   // Workaround for non-deducibility of the index sequence template parameter if it's given at the top level
   template <class>
@@ -138,7 +138,7 @@ private:
   // Can't use defaulted parameter in the __deduction_workaround template because of a bug in MSVC warning C4348.
   using __impl = __deduction_workaround<_CUDA_VSTD::make_index_sequence<extents_type::rank()>>;
 
-  using __map_acc_pair_t = detail::__compressed_pair<mapping_type, accessor_type>;
+  using __map_acc_pair_t = __detail::__compressed_pair<mapping_type, accessor_type>;
 
 public:
 
@@ -397,7 +397,7 @@ public:
 
 private:
 
-  detail::__compressed_pair<data_handle_type, __map_acc_pair_t> __members{};
+  __detail::__compressed_pair<data_handle_type, __map_acc_pair_t> __members{};
 
   __MDSPAN_FORCE_INLINE_FUNCTION constexpr data_handle_type& __ptr_ref() noexcept { return __members.__first(); }
   __MDSPAN_FORCE_INLINE_FUNCTION constexpr data_handle_type const& __ptr_ref() const noexcept { return __members.__first(); }

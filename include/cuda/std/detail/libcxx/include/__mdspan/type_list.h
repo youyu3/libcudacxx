@@ -60,7 +60,7 @@ _LIBCUDACXX_BEGIN_NAMESPACE_STD
 
 //==============================================================================
 
-namespace detail {
+namespace __detail {
 
 template <class... _Ts> struct __type_list { static constexpr auto __size = sizeof...(_Ts); };
 
@@ -121,7 +121,7 @@ struct __type_at<3, __type_list<_T0, _T1, _T2, _T3, _Ts...>> {
 };
 
 
-} // namespace detail
+} // namespace __detail
 
 //==============================================================================
 

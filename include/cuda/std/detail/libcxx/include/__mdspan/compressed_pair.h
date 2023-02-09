@@ -63,7 +63,7 @@ _LIBCUDACXX_BEGIN_NAMESPACE_STD
 
 #if _LIBCUDACXX_STD_VER > 11
 
-namespace detail {
+namespace __detail {
 
 // For no unique address emulation, this is the case taken when neither are empty.
 // For real `[[no_unique_address]]`, this case is always taken.
@@ -231,7 +231,7 @@ struct __compressed_pair<
 
 #endif // !defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
 
-} // end namespace detail
+} // end namespace __detail
 
 #endif // _LIBCUDACXX_STD_VER > 11
 

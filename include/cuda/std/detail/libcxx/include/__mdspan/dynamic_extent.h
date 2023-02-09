@@ -61,7 +61,7 @@ _LIBCUDACXX_BEGIN_NAMESPACE_STD
 
 #if _LIBCUDACXX_STD_VER > 11
 
-namespace detail {
+namespace __detail {
 
 template <class>
 __MDSPAN_HOST_DEVICE constexpr auto __make_dynamic_extent() {
@@ -73,7 +73,7 @@ __MDSPAN_HOST_DEVICE constexpr auto __make_dynamic_extent_integral() {
   return dynamic_extent;
 }
 
-} // end namespace detail
+} // end namespace __detail
 
 #endif // _LIBCUDACXX_STD_VER > 11
 
