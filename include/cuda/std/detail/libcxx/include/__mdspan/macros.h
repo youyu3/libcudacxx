@@ -633,7 +633,6 @@ _LIBCUDACXX_END_NAMESPACE_STD
 // <editor-fold desc="Pre-C++14 constexpr"> {{{1
 
 #if __MDSPAN_USE_CONSTEXPR_14
-#  define __MDSPAN_CONSTEXPR_14 constexpr
 // Workaround for a bug (I think?) in EDG frontends
 #  ifdef __EDG__
 #    define __MDSPAN_CONSTEXPR_14_DEFAULTED
@@ -641,7 +640,6 @@ _LIBCUDACXX_END_NAMESPACE_STD
 #    define __MDSPAN_CONSTEXPR_14_DEFAULTED constexpr
 #  endif
 #else
-#  define __MDSPAN_CONSTEXPR_14
 #  define __MDSPAN_CONSTEXPR_14_DEFAULTED
 #endif
 

@@ -125,7 +125,7 @@ class layout_right::mapping {
       )
     )
     __MDSPAN_CONDITIONAL_EXPLICIT((!_CUDA_VSTD::is_convertible<_OtherExtents, extents_type>::value)) // needs two () due to comma
-    __MDSPAN_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14
+    __MDSPAN_INLINE_FUNCTION constexpr
     mapping(mapping<_OtherExtents> const& __other) noexcept // NOLINT(google-explicit-constructor)
       :__extents(__other.extents())
     {
@@ -143,7 +143,7 @@ class layout_right::mapping {
       )
     )
     __MDSPAN_CONDITIONAL_EXPLICIT((!_CUDA_VSTD::is_convertible<_OtherExtents, extents_type>::value)) // needs two () due to comma
-    __MDSPAN_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14
+    __MDSPAN_INLINE_FUNCTION constexpr
     mapping(layout_left::mapping<_OtherExtents> const& __other) noexcept // NOLINT(google-explicit-constructor)
       :__extents(__other.extents())
     {
@@ -160,7 +160,7 @@ class layout_right::mapping {
       )
     )
     __MDSPAN_CONDITIONAL_EXPLICIT((extents_type::rank() > 0))
-    __MDSPAN_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14
+    __MDSPAN_INLINE_FUNCTION constexpr
     mapping(layout_stride::mapping<_OtherExtents> const& __other) // NOLINT(google-explicit-constructor)
       :__extents(__other.extents())
     {

@@ -288,7 +288,7 @@ struct __assign_op_slice_handler<
   // For size_t slice, skip the extent and stride, but add an offset corresponding to the value
   template <size_t _OldStaticExtent, size_t _OldStaticStride>
   __MDSPAN_FORCE_INLINE_FUNCTION // NOLINT (misc-unconventional-assign-operator)
-  __MDSPAN_CONSTEXPR_14 auto
+  constexpr auto
   operator=(__slice_wrap<_OldStaticExtent, _OldStaticStride, size_t>&& __slice) noexcept
     -> __assign_op_slice_handler<
          _IndexT,
@@ -310,7 +310,7 @@ struct __assign_op_slice_handler<
   // but it might help for specialized layouts.
   template <size_t _OldStaticExtent, size_t _OldStaticStride, class _IntegerType, _IntegerType _Value0>
   __MDSPAN_FORCE_INLINE_FUNCTION // NOLINT (misc-unconventional-assign-operator)
-  __MDSPAN_CONSTEXPR_14 auto
+  constexpr auto
   operator=(__slice_wrap<_OldStaticExtent, _OldStaticStride, integral_constant<_IntegerType, _Value0>>&&) noexcept
     -> __assign_op_slice_handler<
          _IndexT,
@@ -335,7 +335,7 @@ struct __assign_op_slice_handler<
   // For a _CUDA_VSTD::full_extent, offset 0 and old extent
   template <size_t _OldStaticExtent, size_t _OldStaticStride>
   __MDSPAN_FORCE_INLINE_FUNCTION // NOLINT (misc-unconventional-assign-operator)
-  __MDSPAN_CONSTEXPR_14 auto
+  constexpr auto
   operator=(__slice_wrap<_OldStaticExtent, _OldStaticStride, full_extent_t>&& __slice) noexcept
     -> __assign_op_slice_handler<
          _IndexT,
@@ -359,7 +359,7 @@ struct __assign_op_slice_handler<
   // For a _CUDA_VSTD::tuple, add an offset and add a new dynamic extent (strides still preserved)
   template <size_t _OldStaticExtent, size_t _OldStaticStride>
   __MDSPAN_FORCE_INLINE_FUNCTION // NOLINT (misc-unconventional-assign-operator)
-  __MDSPAN_CONSTEXPR_14 auto
+  constexpr auto
   operator=(__slice_wrap<_OldStaticExtent, _OldStaticStride, tuple<size_t, size_t>>&& __slice) noexcept
     -> __assign_op_slice_handler<
          _IndexT,
@@ -387,7 +387,7 @@ struct __assign_op_slice_handler<
 	    class _IntegerType0, _IntegerType0 _Value0,
 	    class _IntegerType1, _IntegerType1 _Value1>
   __MDSPAN_FORCE_INLINE_FUNCTION // NOLINT (misc-unconventional-assign-operator)
-  __MDSPAN_CONSTEXPR_14 auto
+  constexpr auto
   operator=(__slice_wrap<_OldStaticExtent, _OldStaticStride, tuple<integral_constant<_IntegerType0, _Value0>, integral_constant<_IntegerType1, _Value1>>>&& __slice) noexcept
     -> __assign_op_slice_handler<
          _IndexT,
@@ -423,7 +423,7 @@ struct __assign_op_slice_handler<
   __MDSPAN_INLINE_FUNCTION
   __MDSPAN_DEDUCE_RETURN_TYPE_SINGLE_LINE(
     (
-      __MDSPAN_CONSTEXPR_14 /* auto */
+      constexpr /* auto */
       _make_layout_mapping_impl(NewLayout) noexcept
     ),
     (
@@ -437,7 +437,7 @@ struct __assign_op_slice_handler<
   __MDSPAN_INLINE_FUNCTION
   __MDSPAN_DEDUCE_RETURN_TYPE_SINGLE_LINE(
     (
-      __MDSPAN_CONSTEXPR_14 /* auto */
+      constexpr /* auto */
       _make_layout_mapping_impl(layout_stride) noexcept
     ),
     (
@@ -450,7 +450,7 @@ struct __assign_op_slice_handler<
   __MDSPAN_INLINE_FUNCTION
   __MDSPAN_DEDUCE_RETURN_TYPE_SINGLE_LINE(
     (
-      __MDSPAN_CONSTEXPR_14 /* auto */
+      constexpr /* auto */
       make_layout_mapping(_OldLayoutMapping const&) noexcept
     ),
     (

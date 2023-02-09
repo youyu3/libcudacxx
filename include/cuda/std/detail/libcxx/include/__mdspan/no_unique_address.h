@@ -73,7 +73,7 @@ struct __no_unique_address_emulation {
   __MDSPAN_FORCE_INLINE_FUNCTION constexpr _Tp const &__ref() const noexcept {
     return __v;
   }
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 _Tp &__ref() noexcept {
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr _Tp &__ref() noexcept {
     return __v;
   }
 };
@@ -105,7 +105,7 @@ struct __no_unique_address_emulation<
   __MDSPAN_FORCE_INLINE_FUNCTION constexpr _Tp const &__ref() const noexcept {
     return *static_cast<_Tp const *>(this);
   }
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 _Tp &__ref() noexcept {
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr _Tp &__ref() noexcept {
     return *static_cast<_Tp *>(this);
   }
 

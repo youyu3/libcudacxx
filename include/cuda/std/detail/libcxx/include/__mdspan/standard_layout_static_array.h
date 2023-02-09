@@ -129,7 +129,7 @@ struct __standard_layout_psa<
   using __base_t = __no_unique_address_emulation<__next_t>;
 #endif
 
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 __next_t &__next() noexcept {
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr __next_t &__next() noexcept {
 #if defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
     return __next_;
 #else
@@ -340,12 +340,12 @@ struct __standard_layout_psa<
     return __value;
   }
   template <size_t _Ip, _CUDA_VSTD::enable_if_t<_Ip != _Idx, int> = 0>
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 void
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr void
   __set_n(_Tp const &__rhs) noexcept {
     __next().__set_value(__rhs);
   }
   template <size_t _Ip, _CUDA_VSTD::enable_if_t<_Ip == _Idx, int> = 1>
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 void
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr void
   __set_n(_Tp const &) noexcept {
     // Don't assert here because that would break constexpr. This better
     // not change anything, though
@@ -382,7 +382,7 @@ struct __standard_layout_psa<
 
   using __value_pair_t = __compressed_pair<_Tp, __next_t>;
   __value_pair_t __value_pair;
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 __next_t &__next() noexcept {
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr __next_t &__next() noexcept {
     return __value_pair.__second();
   }
   __MDSPAN_FORCE_INLINE_FUNCTION constexpr __next_t const &__next() const noexcept {
@@ -500,12 +500,12 @@ struct __standard_layout_psa<
     return __value_pair.__first();
   }
   template <size_t _Ip, _CUDA_VSTD::enable_if_t<_Ip != _Idx, int> = 0>
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 void
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr void
   __set_n(_Tp const &__rhs) noexcept {
     __next().__set_value(__rhs);
   }
   template <size_t _Ip, _CUDA_VSTD::enable_if_t<_Ip == _Idx, int> = 1>
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 void
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr void
   __set_n(_Tp const &__rhs) noexcept {
     __value_pair.__first() = __rhs;
   }

@@ -210,7 +210,7 @@ public:
   }
 
   template <class _Up, size_t _Ip>
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 void __set_n(_Up&& __rhs) noexcept {
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr void __set_n(_Up&& __rhs) noexcept {
     static_cast<__base_n<_Ip>*>(this)->__set_value((_Up&&)__rhs);
   }
 

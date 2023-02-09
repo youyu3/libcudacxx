@@ -143,7 +143,7 @@ public:
 // private members dealing with the way we internally store dynamic extents
  private:
 
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr
   __storage_t& __storage() noexcept {
 #if defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
     return __storage_;

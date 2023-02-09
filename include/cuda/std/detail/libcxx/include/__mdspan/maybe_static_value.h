@@ -81,7 +81,7 @@ struct __maybe_static_value {
     return static_cast<_dynamic_t>(__v);
   }
   template <class _Up>
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr
   __mdspan_enable_fold_comma
   __set_value(_Up&& /*__rhs*/) noexcept {
     // Should we assert that the value matches the static value here?
@@ -126,11 +126,11 @@ struct __maybe_static_value<_dynamic_t, _static_t, __is_dynamic_sentinal, __is_d
   __MDSPAN_FORCE_INLINE_FUNCTION constexpr _dynamic_t __value() const noexcept {
     return __v;
   }
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 _dynamic_t &__ref() noexcept {
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr _dynamic_t &__ref() noexcept {
     return __v;
   }
   template <class _Up>
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr
   __mdspan_enable_fold_comma
   __set_value(_Up&& __rhs) noexcept {
     __v = (_Up &&)rhs;
@@ -140,11 +140,11 @@ struct __maybe_static_value<_dynamic_t, _static_t, __is_dynamic_sentinal, __is_d
   __MDSPAN_FORCE_INLINE_FUNCTION constexpr _dynamic_t __value() const noexcept {
     return this->__no_unique_address_emulation<_dynamic_t>::__ref();
   }
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 _dynamic_t &__ref() noexcept {
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr _dynamic_t &__ref() noexcept {
     return this->__no_unique_address_emulation<_dynamic_t>::__ref();
   }
   template <class _Up>
-  __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14
+  __MDSPAN_FORCE_INLINE_FUNCTION constexpr
   __mdspan_enable_fold_comma
   __set_value(_Up&& __rhs) noexcept {
     this->__no_unique_address_emulation<_dynamic_t>::__ref() = (_Up &&)__rhs;

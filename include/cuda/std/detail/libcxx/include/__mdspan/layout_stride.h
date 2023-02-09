@@ -150,7 +150,7 @@ struct layout_stride {
       return this->__base_t::__ref().__second();
 #endif
     }
-    __MDSPAN_FORCE_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 __strides_storage_t&
+    __MDSPAN_FORCE_INLINE_FUNCTION constexpr __strides_storage_t&
     __strides_storage() noexcept {
 #if defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
       return __members.__second();
@@ -389,7 +389,7 @@ struct layout_stride {
        detail::__is_mapping_of<layout_right, _StridedLayoutMapping> ||
        detail::__is_mapping_of<layout_stride, _StridedLayoutMapping>)
     ) // needs two () due to comma
-    __MDSPAN_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14
+    __MDSPAN_INLINE_FUNCTION constexpr
     mapping(_StridedLayoutMapping const& __other) noexcept // NOLINT(google-explicit-constructor)
 #if defined(__MDSPAN_USE_ATTRIBUTE_NO_UNIQUE_ADDRESS)
       : __members{
@@ -461,7 +461,7 @@ struct layout_stride {
     __MDSPAN_INLINE_FUNCTION static constexpr bool is_always_strided() noexcept { return true; }
 
     __MDSPAN_INLINE_FUNCTION static constexpr bool is_unique() noexcept { return true; }
-    __MDSPAN_INLINE_FUNCTION __MDSPAN_CONSTEXPR_14 bool is_exhaustive() const noexcept {
+    __MDSPAN_INLINE_FUNCTION constexpr bool is_exhaustive() const noexcept {
       return required_span_size() == __get_size( extents(), _CUDA_VSTD::make_index_sequence<extents_type::rank()>());
     }
     __MDSPAN_INLINE_FUNCTION static constexpr bool is_strided() noexcept { return true; }
