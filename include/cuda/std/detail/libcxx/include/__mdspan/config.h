@@ -154,13 +154,6 @@ static_assert(__MDSPAN_CPLUSPLUS >= __MDSPAN_CXX_STD_14, "mdspan requires C++14 
 #  endif
 #endif
 
-#ifndef __MDSPAN_USE_INLINE_VARIABLES
-#  if defined(__cpp_inline_variables) && __cpp_inline_variables >= 201606L \
-         || (!defined(__cpp_inline_variables) && __MDSPAN_HAS_CXX_17)
-#    define __MDSPAN_USE_INLINE_VARIABLES 1
-#  endif
-#endif
-
 #ifndef __MDSPAN_NEEDS_TRAIT_VARIABLE_TEMPLATE_BACKPORTS
 #  if (!(defined(__cpp_lib_type_trait_variable_templates) && __cpp_lib_type_trait_variable_templates >= 201510L) \
           || !__MDSPAN_HAS_CXX_17)

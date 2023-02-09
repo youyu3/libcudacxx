@@ -72,11 +72,11 @@ namespace detail {
 
 //==============================================================================
 
-__MDSPAN_INLINE_VARIABLE constexpr struct
+_LIBCUDACXX_INLINE_VAR constexpr struct
     __construct_psa_from_dynamic_exts_values_tag_t {
 } __construct_psa_from_dynamic_exts_values_tag = {};
 
-__MDSPAN_INLINE_VARIABLE constexpr struct
+_LIBCUDACXX_INLINE_VAR constexpr struct
     __construct_psa_from_all_exts_values_tag_t {
 } __construct_psa_from_all_exts_values_tag = {};
 

@@ -257,18 +257,6 @@
 //==============================================================================
 
 //==============================================================================
-// <editor-fold desc="inline variables"> {{{1
-
-#ifdef __MDSPAN_USE_INLINE_VARIABLES
-#  define __MDSPAN_INLINE_VARIABLE inline
-#else
-#  define __MDSPAN_INLINE_VARIABLE
-#endif
-
-// </editor-fold> end inline variables }}}1
-//==============================================================================
-
-//==============================================================================
 // <editor-fold desc="Return type deduction"> {{{1
 
 #if __MDSPAN_USE_RETURN_TYPE_DEDUCTION
