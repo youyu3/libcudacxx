@@ -74,7 +74,7 @@ __global__ void example_kernel(int *gmem, int *pinned_mem) {
 
   __shared__ int shared_v;
   // This atomic is suitable for threads in the same thread block.
-  cuda::atomic_ref<int, cuda::thread_scope_block> d(&shared);
+  cuda::atomic_ref<int, cuda::thread_scope_block> d(shared_v);
 }
 ```
 
